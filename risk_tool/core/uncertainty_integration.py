@@ -18,10 +18,21 @@ from .two_layer import (
 )
 from .data_models import RiskItem, WBSItem, Distribution, ProjectInfo
 from .risk_driver import RiskSimulator
+from .correlation import CorrelationMatrix
+from .cost_models import Project as ProjectConfig
 
-# from .correlation import CorrelationMatrix  # Will be implemented if needed
 from .latent_factors import LatentFactorModel
 from .distributions import DistributionSampler
+
+
+# Temporary placeholder class for RiskModel
+class RiskModel:
+    """Risk model containing WBS items and risk items."""
+
+    def __init__(self, wbs_items=None, risk_items=None, correlation_matrix=None):
+        self.wbs_items = wbs_items or []
+        self.risk_items = risk_items or []
+        self.correlation_matrix = correlation_matrix
 
 
 @dataclass
