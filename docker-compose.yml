@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  risk-tool:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    image: risk-tool:latest
+    container_name: risk-modeling-tool
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data:ro
+      - ./results:/app/results:rw
+      - ./templates:/app/templates:ro
+    working_dir: /app
+    command: ["risk-tool", "--help"]
+    restart: unless-stopped
+    
+  # Optional: Streamlit web interface
+  streamlit-app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    image: risk-tool:latest
+    container_name: risk-tool-webapp
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./data:/app/data:ro
+      - ./results:/app/results:rw
+      - ./templates:/app/templates:ro
+    ports:
+      - "8501:8501"
+    working_dir: /app
+    command: ["streamlit", "run", "risk_tool/webapp/app.py", "--server.address", "0.0.0.0"]
+    restart: unless-stopped
+    depends_on:
+      - risk-tool
+    profiles: ["web"]
+    
+  # Development environment
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    image: risk-tool:dev
+    container_name: risk-tool-dev
+    environment:
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - .:/app:rw
+      - risk-tool-cache:/root/.cache
+    working_dir: /app
+    command: ["bash"]
+    stdin_open: true
+    tty: true
+    profiles: ["dev"]
+
+volumes:
+  risk-tool-cache:
+    driver: local
+
+networks:
+  default:
+    name: risk-modeling-network
