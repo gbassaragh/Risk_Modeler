@@ -1,0 +1,171 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "risk-tool"
+version = "1.0.0"
+authors = [
+    {name = "T&D Risk Modeling Team", email = "risk@utility.com"},
+]
+description = "Monte Carlo risk modeling tool for utility T&D projects"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Topic :: Office/Business :: Financial",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "scipy>=1.10.0",
+    "numba>=0.58.0",
+    "matplotlib>=3.7.0",
+    "plotly>=5.15.0",
+    "openpyxl>=3.1.0",
+    "pydantic>=2.0.0",
+    "typer>=0.9.0",
+    "pytest>=7.4.0",
+    "rich>=13.0.0",
+    "streamlit>=1.28.0",
+    "reportlab>=4.0.0",
+    "kaleido>=0.2.1",
+    "pyyaml>=6.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest-cov",
+    "pytest-benchmark", 
+    "black",
+    "flake8",
+    "mypy",
+    "pre-commit",
+    "bandit",
+    "safety",
+]
+
+[project.scripts]
+risk-tool = "risk_tool.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/utility/risk-tool"
+Documentation = "https://risk-tool.readthedocs.io/"
+Repository = "https://github.com/utility/risk-tool.git"
+Issues = "https://github.com/utility/risk-tool/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["risk_tool*"]
+
+[tool.setuptools.package-data]
+risk_tool = [
+    "templates/*.xlsx",
+    "templates/*.yaml", 
+    "templates/*.json",
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+max-complexity = 10
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    ".venv",
+    ".eggs",
+    "*.egg-info",
+]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = false
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = [
+    "scipy.*",
+    "matplotlib.*",
+    "plotly.*",
+    "numba.*",
+    "openpyxl.*",
+    "reportlab.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = [
+    "risk_tool/tests",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "benchmark: marks tests as performance benchmarks",
+]
+
+[tool.coverage.run]
+source = ["risk_tool"]
+omit = [
+    "risk_tool/tests/*",
+    "examples/*",
+    "setup.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+[tool.bandit]
+exclude_dirs = ["tests", "examples"]
+skips = ["B101", "B601"]  # Skip assert_used and shell usage (may be needed for tests)
+
+[tool.bandit.assert_used]
+skips = ["*_test.py", "*test_*.py"]
