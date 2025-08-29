@@ -7,9 +7,8 @@ Optimized with NumPy vectorization and efficient memory management.
 import numpy as np
 from scipy import stats
 from scipy.special import gamma, beta as beta_func
-from typing import Dict, Any, Union, Optional, Tuple
-from pydantic import BaseModel, field_validator
-from pydantic.v1 import validator  # Backwards compatibility
+from typing import Dict, Any, Union, Optional, Tuple, List
+from pydantic import BaseModel, field_validator, ConfigDict
 import warnings
 
 class DistributionConfig(BaseModel):

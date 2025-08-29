@@ -4,14 +4,17 @@ Implements project cost models with work breakdown structure.
 """
 
 import numpy as np
-from typing import Dict, List, Any, Optional, Union
-from pydantic import BaseModel, validator
+from typing import Dict, List, Any, Optional, Union, Tuple
+from pydantic import BaseModel, field_validator, ConfigDict
 from datetime import datetime, date
 from .distributions import DistributionSampler
 
 
 class WBSItem(BaseModel):
     """Work Breakdown Structure item."""
+    
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+    
     code: str
     name: str
     quantity: float
@@ -22,20 +25,23 @@ class WBSItem(BaseModel):
     tags: List[str] = []
     indirect_factor: float = 0.0
     
-    @validator('quantity')
-    def validate_quantity(cls, v):
+    @field_validator('quantity')
+    @classmethod
+    def validate_quantity(cls, v: float) -> float:
         if v < 0:
             raise ValueError("Quantity must be non-negative")
         return v
     
-    @validator('unit_cost')
-    def validate_unit_cost(cls, v):
+    @field_validator('unit_cost')
+    @classmethod
+    def validate_unit_cost(cls, v: float) -> float:
         if v < 0:
             raise ValueError("Unit cost must be non-negative")
         return v
     
-    @validator('indirect_factor')
-    def validate_indirect_factor(cls, v):
+    @field_validator('indirect_factor')
+    @classmethod
+    def validate_indirect_factor(cls, v: float) -> float:
         if v < 0:
             raise ValueError("Indirect factor must be non-negative")
         return v
@@ -58,8 +64,8 @@ class EscalationConfig(BaseModel):
         if not self.target_year:
             return 0.0
         
-        base = datetime.strptime(self.base_year, "%Y")
-        target = datetime.strptime(self.target_year, "%Y")
+        base: datetime = datetime.strptime(self.base_year, "%Y")
+        target: datetime = datetime.strptime(self.target_year, "%Y")
         return (target - base).days / 365.25
 
 

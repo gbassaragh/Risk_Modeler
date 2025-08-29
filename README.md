@@ -1,6 +1,6 @@
-# Risk Modeling Tool for T&D Projects
+# Risk_Modeler - Monte Carlo Risk Analysis for T&D Projects
 
-A comprehensive Monte Carlo simulation tool for Transmission & Distribution (T&D) utility projects, designed for accurate cost modeling, risk assessment, and contingency analysis.
+A production-grade Monte Carlo simulation engine for probabilistic cost analysis of transmission lines and substations. Built with modern Python architecture, comprehensive error handling, and professional DevOps practices.
 
 ## Features
 

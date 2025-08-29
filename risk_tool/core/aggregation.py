@@ -4,7 +4,7 @@ Main simulation engine that coordinates all components.
 """
 
 import numpy as np
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Dict, List, Any, Optional, Tuple, Union
 import time
 import warnings
 
@@ -23,23 +23,23 @@ from .validation import ValidationEngine
 class SimulationEngine:
     """Main Monte Carlo simulation engine."""
     
-    def __init__(self, config: SimulationConfig):
+    def __init__(self, config: SimulationConfig) -> None:
         """Initialize simulation engine.
         
         Args:
             config: Simulation configuration
         """
-        self.config = config
-        self.random_state = np.random.RandomState(config.random_seed)
+        self.config: SimulationConfig = config
+        self.random_state: np.random.RandomState = np.random.RandomState(config.random_seed)
         
         # Initialize components
-        self.sampler = None
-        self.cost_simulator = None
-        self.risk_simulator = None
-        self.escalation_engine = EscalationEngine(self.random_state)
+        self.sampler: Optional[MonteCarloSampler] = None
+        self.cost_simulator: Optional[CostSimulator] = None
+        self.risk_simulator: Optional[RiskSimulator] = None
+        self.escalation_engine: EscalationEngine = EscalationEngine(self.random_state)
         
         # Results storage
-        self.results = {}
+        self.results: Dict[str, Any] = {}
         
     def run_simulation(self, 
                       project: Project, 

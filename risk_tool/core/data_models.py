@@ -2,15 +2,17 @@
 
 Enhanced models supporting new specification requirements:
 - Tags and UoM for WBS items
-- Conditional logic for risks
+- Conditional logic for risks  
 - Latent factors and advanced correlation
 - Multi-currency support
 - Two-layer uncertainty
+
+This module provides comprehensive type-safe data models for risk analysis,
+cost estimation, and Monte Carlo simulation configuration.
 """
 
-from pydantic import BaseModel, Field, field_validator, model_validator
-from pydantic.v1 import validator, root_validator  # Backwards compatibility
-from typing import Dict, List, Optional, Union, Any, Literal
+from pydantic import BaseModel, Field, field_validator, model_validator, ConfigDict
+from typing import Dict, List, Optional, Union, Any, Literal, Tuple
 from enum import Enum
 from datetime import date
 import numpy as np

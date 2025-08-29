@@ -1,11 +1,19 @@
 """Command-line interface for the Risk Modeling Tool.
 
 Provides comprehensive CLI with commands for running simulations, generating templates,
-and managing project data.
+and managing project data. Built with Typer for modern CLI experience with rich formatting
+and comprehensive help documentation.
+
+Features:
+- Monte Carlo simulation execution
+- Data import/export (Excel, CSV, JSON)
+- Template generation and validation
+- Audit logging and deterministic verification
+- Professional reporting with charts and statistics
 """
 
 import typer
-from typing import Optional, List
+from typing import Optional, List, Dict, Any, Union
 from pathlib import Path
 import json
 import sys
@@ -23,11 +31,11 @@ from .core.validation import validate_simulation_inputs
 from .reporting.reporting import ReportGenerator, create_simple_summary_report
 from .core.audit import AuditLogger, DeterminismVerifier
 
-app = typer.Typer(help="Monte Carlo risk modeling tool for utility T&D projects")
-console = Console()
+app: typer.Typer = typer.Typer(help="Monte Carlo risk modeling tool for utility T&D projects")
+console: Console = Console()
 
 # Global state
-current_audit_logger = None
+current_audit_logger: Optional[AuditLogger] = None
 
 
 @app.command()
