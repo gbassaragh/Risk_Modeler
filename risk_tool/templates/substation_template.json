@@ -1,0 +1,165 @@
+{
+  "project_info": {
+    "name": "50 MVA Distribution Substation",
+    "description": "New distribution substation with 138kV/12.47kV transformation",
+    "project_type": "Substation",
+    "voltage_class": "138kV/12.47kV",
+    "capacity_mva": 50.0,
+    "bay_count": 4,
+    "substation_type": "distribution",
+    "region": "Northeast",
+    "base_year": "2025",
+    "currency": "USD",
+    "aace_class": "Class 3",
+    "contingency_target": 0.20
+  },
+  "wbs_items": [
+    {
+      "code": "01-SITE",
+      "name": "Site Preparation & Civil Works",
+      "quantity": 1.0,
+      "uom": "project",
+      "unit_cost": 500000,
+      "dist_unit_cost": {
+        "type": "pert",
+        "min": 400000,
+        "most_likely": 500000,
+        "max": 700000
+      },
+      "tags": ["civil", "grading", "drainage", "fencing"],
+      "indirect_factor": 0.15
+    },
+    {
+      "code": "02-XFMR",
+      "name": "Power Transformers",
+      "quantity": 1.0,
+      "uom": "transformer",
+      "unit_cost": 800000,
+      "dist_unit_cost": {
+        "type": "triangular",
+        "low": 750000,
+        "mode": 800000,
+        "high": 950000
+      },
+      "tags": ["transformer", "oil", "cooling", "LTC"],
+      "indirect_factor": 0.10
+    },
+    {
+      "code": "03-138SW",
+      "name": "138kV Switchgear",
+      "quantity": 4.0,
+      "uom": "positions",
+      "unit_cost": 120000,
+      "dist_unit_cost": {
+        "type": "normal",
+        "mean": 120000,
+        "stdev": 15000,
+        "truncate_low": 90000,
+        "truncate_high": 150000
+      },
+      "tags": ["switchgear", "SF6", "breakers", "disconnects"],
+      "indirect_factor": 0.12
+    },
+    {
+      "code": "04-12SW",
+      "name": "12.47kV Switchgear",
+      "quantity": 8.0,
+      "uom": "positions", 
+      "unit_cost": 45000,
+      "dist_unit_cost": {
+        "type": "triangular",
+        "low": 40000,
+        "mode": 45000,
+        "high": 55000
+      },
+      "tags": ["switchgear", "vacuum", "breakers", "reclosers"],
+      "indirect_factor": 0.08
+    },
+    {
+      "code": "05-PROT",
+      "name": "Protection & Control",
+      "quantity": 1.0,
+      "uom": "system",
+      "unit_cost": 300000,
+      "dist_unit_cost": {
+        "type": "pert",
+        "min": 250000,
+        "most_likely": 300000,
+        "max": 400000
+      },
+      "tags": ["relays", "SCADA", "communications", "control"],
+      "indirect_factor": 0.20
+    },
+    {
+      "code": "06-STRUCT",
+      "name": "Steel Structures",
+      "quantity": 15.0,
+      "uom": "structures",
+      "unit_cost": 25000,
+      "dist_unit_cost": {
+        "type": "triangular",
+        "low": 20000,
+        "mode": 25000,
+        "high": 35000
+      },
+      "tags": ["steel", "galvanizing", "foundations", "bus"],
+      "indirect_factor": 0.10
+    },
+    {
+      "code": "07-CABLE",
+      "name": "Power & Control Cables",
+      "quantity": 1.0,
+      "uom": "project",
+      "unit_cost": 200000,
+      "dist_unit_cost": {
+        "type": "normal",
+        "mean": 200000,
+        "stdev": 30000,
+        "truncate_low": 150000,
+        "truncate_high": 280000
+      },
+      "tags": ["cable", "conduit", "terminations", "splices"],
+      "indirect_factor": 0.08
+    },
+    {
+      "code": "08-MISC",
+      "name": "Engineering & Project Management",
+      "quantity": 1.0,
+      "uom": "project",
+      "unit_cost": 250000,
+      "dist_unit_cost": {
+        "type": "triangular",
+        "low": 200000,
+        "mode": 250000,
+        "high": 320000
+      },
+      "tags": ["engineering", "management", "testing", "commissioning"],
+      "indirect_factor": 0.05
+    }
+  ],
+  "correlations": [
+    {
+      "items": ["02-XFMR", "05-PROT"],
+      "correlation": 0.5,
+      "method": "spearman"
+    },
+    {
+      "items": ["03-138SW", "04-12SW"],
+      "correlation": 0.6,
+      "method": "spearman"
+    },
+    {
+      "items": ["06-STRUCT", "07-CABLE"],
+      "correlation": 0.4,
+      "method": "spearman"
+    }
+  ],
+  "simulation_config": {
+    "iterations": 10000,
+    "random_seed": 12345,
+    "sampling_method": "LHS",
+    "convergence_threshold": 0.01,
+    "max_iterations": 50000,
+    "confidence_levels": [0.1, 0.5, 0.8, 0.9, 0.95]
+  }
+}

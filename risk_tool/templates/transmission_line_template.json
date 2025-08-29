@@ -1,0 +1,164 @@
+{
+  "project_info": {
+    "name": "138kV Transmission Line Project",
+    "description": "25-mile transmission line construction",
+    "project_type": "TransmissionLine",
+    "voltage_class": "138kV",
+    "length_miles": 25.0,
+    "circuit_count": 1,
+    "terrain_type": "mixed",
+    "region": "Northeast",
+    "base_year": "2025",
+    "currency": "USD",
+    "aace_class": "Class 3",
+    "contingency_target": 0.25
+  },
+  "wbs_items": [
+    {
+      "code": "01-ROW",
+      "name": "Right of Way & Land Acquisition",
+      "quantity": 25.0,
+      "uom": "miles",
+      "unit_cost": 50000,
+      "dist_unit_cost": {
+        "type": "triangular",
+        "low": 40000,
+        "mode": 50000,
+        "high": 75000
+      },
+      "tags": ["land", "legal", "environmental"],
+      "indirect_factor": 0.15
+    },
+    {
+      "code": "02-CLEAR",
+      "name": "Clearing & Access Roads",
+      "quantity": 25.0,
+      "uom": "miles", 
+      "unit_cost": 25000,
+      "dist_unit_cost": {
+        "type": "pert",
+        "min": 20000,
+        "most_likely": 25000,
+        "max": 40000
+      },
+      "tags": ["clearing", "access", "environmental"],
+      "indirect_factor": 0.10
+    },
+    {
+      "code": "03-STRUCT",
+      "name": "Transmission Structures",
+      "quantity": 125.0,
+      "uom": "structures",
+      "unit_cost": 8000,
+      "dist_unit_cost": {
+        "type": "triangular", 
+        "low": 7000,
+        "mode": 8000,
+        "high": 12000
+      },
+      "tags": ["steel", "foundation", "erection"],
+      "indirect_factor": 0.12
+    },
+    {
+      "code": "04-FOUND",
+      "name": "Structure Foundations",
+      "quantity": 125.0,
+      "uom": "foundations",
+      "unit_cost": 5000,
+      "dist_unit_cost": {
+        "type": "pert",
+        "min": 4000,
+        "most_likely": 5000,
+        "max": 8000
+      },
+      "tags": ["concrete", "excavation", "geotechnical"],
+      "indirect_factor": 0.08
+    },
+    {
+      "code": "05-COND",
+      "name": "Conductor & Hardware",
+      "quantity": 75.0,
+      "uom": "circuit-miles",
+      "unit_cost": 45000,
+      "dist_unit_cost": {
+        "type": "normal",
+        "mean": 45000,
+        "stdev": 6000,
+        "truncate_low": 35000,
+        "truncate_high": 60000
+      },
+      "tags": ["aluminum", "hardware", "stringing"],
+      "indirect_factor": 0.05
+    },
+    {
+      "code": "06-OPGW",
+      "name": "OPGW Cable",
+      "quantity": 25.0,
+      "uom": "miles",
+      "unit_cost": 15000,
+      "dist_unit_cost": {
+        "type": "triangular",
+        "low": 12000,
+        "mode": 15000,
+        "high": 20000
+      },
+      "tags": ["fiber", "communications", "stringing"],
+      "indirect_factor": 0.05
+    },
+    {
+      "code": "07-TERM",
+      "name": "Terminal Equipment",
+      "quantity": 2.0,
+      "uom": "terminals",
+      "unit_cost": 150000,
+      "dist_unit_cost": {
+        "type": "pert",
+        "min": 120000,
+        "most_likely": 150000,
+        "max": 200000
+      },
+      "tags": ["switchgear", "protection", "control"],
+      "indirect_factor": 0.20
+    },
+    {
+      "code": "08-MISC",
+      "name": "Engineering & Project Management",
+      "quantity": 1.0,
+      "uom": "project",
+      "unit_cost": 400000,
+      "dist_unit_cost": {
+        "type": "triangular",
+        "low": 350000,
+        "mode": 400000,
+        "high": 500000
+      },
+      "tags": ["engineering", "management", "permits"],
+      "indirect_factor": 0.05
+    }
+  ],
+  "correlations": [
+    {
+      "items": ["03-STRUCT", "04-FOUND"],
+      "correlation": 0.8,
+      "method": "spearman"
+    },
+    {
+      "items": ["05-COND", "06-OPGW"],
+      "correlation": 0.6,
+      "method": "spearman"
+    },
+    {
+      "items": ["01-ROW", "02-CLEAR"],
+      "correlation": 0.7,
+      "method": "spearman"
+    }
+  ],
+  "simulation_config": {
+    "iterations": 10000,
+    "random_seed": 12345,
+    "sampling_method": "LHS",
+    "convergence_threshold": 0.01,
+    "max_iterations": 50000,
+    "confidence_levels": [0.1, 0.5, 0.8, 0.9, 0.95]
+  }
+}

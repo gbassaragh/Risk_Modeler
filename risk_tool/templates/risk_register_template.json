@@ -1,0 +1,156 @@
+[
+  {
+    "id": "WEATHER-001",
+    "name": "Weather-Related Construction Delays",
+    "description": "Extended periods of severe weather causing construction delays and additional costs",
+    "category": "schedule",
+    "probability": 0.4,
+    "impact_distribution": {
+      "type": "pert",
+      "min": 50000,
+      "most_likely": 150000,
+      "max": 400000
+    },
+    "affected_wbs": ["02-CLEAR", "03-STRUCT", "04-FOUND", "05-COND"],
+    "impact_type": "cost_increase",
+    "mitigation_strategy": "Weather contingency planning, flexible scheduling",
+    "risk_owner": "Project Manager",
+    "likelihood_rationale": "Historical weather data shows 40% chance of significant delays",
+    "impact_rationale": "Based on previous projects with weather delays"
+  },
+  {
+    "id": "PERMIT-001", 
+    "name": "Environmental Permitting Delays",
+    "description": "Delays in obtaining environmental permits or unexpected environmental requirements",
+    "category": "regulatory",
+    "probability": 0.25,
+    "impact_distribution": {
+      "type": "triangular",
+      "low": 75000,
+      "mode": 200000,
+      "high": 500000
+    },
+    "affected_wbs": ["01-ROW", "02-CLEAR"],
+    "impact_type": "cost_increase",
+    "mitigation_strategy": "Early permit application, environmental pre-assessment",
+    "risk_owner": "Environmental Lead",
+    "likelihood_rationale": "25% of similar projects experience permitting delays",
+    "impact_rationale": "Additional studies and mitigation measures required"
+  },
+  {
+    "id": "SUPPLY-001",
+    "name": "Equipment Delivery Delays",
+    "description": "Late delivery of major equipment items (transformers, switchgear, conductors)",
+    "category": "technical",
+    "probability": 0.3,
+    "impact_distribution": {
+      "type": "normal",
+      "mean": 100000,
+      "stdev": 40000,
+      "truncate_low": 25000,
+      "truncate_high": 300000
+    },
+    "affected_wbs": ["02-XFMR", "03-138SW", "04-12SW", "05-COND"],
+    "impact_type": "schedule_cost",
+    "mitigation_strategy": "Early procurement, backup suppliers, expediting clauses",
+    "risk_owner": "Procurement Manager",
+    "likelihood_rationale": "Supply chain disruptions common in recent years",
+    "impact_rationale": "Schedule delays lead to extended overhead costs"
+  },
+  {
+    "id": "GEOTECH-001",
+    "name": "Unfavorable Geotechnical Conditions",
+    "description": "Poor soil conditions requiring enhanced foundation designs or access issues",
+    "category": "technical",
+    "probability": 0.2,
+    "impact_distribution": {
+      "type": "pert",
+      "min": 100000,
+      "most_likely": 250000,
+      "max": 600000
+    },
+    "affected_wbs": ["04-FOUND", "06-STRUCT"],
+    "impact_type": "cost_increase",
+    "mitigation_strategy": "Comprehensive geotechnical investigation, contingency designs",
+    "risk_owner": "Engineering Lead",
+    "likelihood_rationale": "20% of projects encounter unexpected soil conditions",
+    "impact_rationale": "Enhanced foundations and access roads required"
+  },
+  {
+    "id": "LABOR-001",
+    "name": "Skilled Labor Shortage",
+    "description": "Shortage of qualified lineworkers and specialized technicians",
+    "category": "market",
+    "probability": 0.35,
+    "impact_distribution": {
+      "type": "triangular",
+      "low": 50000,
+      "mode": 125000,
+      "high": 300000
+    },
+    "affected_wbs": ["03-STRUCT", "05-COND", "06-OPGW", "07-TERM"],
+    "impact_type": "cost_increase",
+    "mitigation_strategy": "Early contractor selection, wage premiums, training programs",
+    "risk_owner": "Construction Manager",
+    "likelihood_rationale": "Current tight labor market for utility construction",
+    "impact_rationale": "Premium wages and extended schedules required"
+  },
+  {
+    "id": "ROW-001",
+    "name": "Right-of-Way Acquisition Delays",
+    "description": "Delays or complications in acquiring necessary land rights and easements",
+    "category": "regulatory",
+    "probability": 0.15,
+    "impact_distribution": {
+      "type": "pert",
+      "min": 100000,
+      "most_likely": 300000,
+      "max": 800000
+    },
+    "affected_wbs": ["01-ROW"],
+    "impact_type": "cost_schedule",
+    "mitigation_strategy": "Early landowner engagement, eminent domain preparation",
+    "risk_owner": "Right-of-Way Lead",
+    "likelihood_rationale": "15% of projects face significant ROW challenges",
+    "impact_rationale": "Legal proceedings and alternative routing costs"
+  },
+  {
+    "id": "SCOPE-001",
+    "name": "Scope Changes and Design Modifications",
+    "description": "Client-requested changes or engineering-driven design modifications",
+    "category": "technical",
+    "probability": 0.5,
+    "impact_distribution": {
+      "type": "normal",
+      "mean": 75000,
+      "stdev": 30000,
+      "truncate_low": 20000,
+      "truncate_high": 200000
+    },
+    "affected_wbs": ["08-MISC"],
+    "impact_type": "cost_schedule",
+    "mitigation_strategy": "Change control procedures, stakeholder alignment",
+    "risk_owner": "Project Manager",
+    "likelihood_rationale": "50% of projects experience some scope changes",
+    "impact_rationale": "Additional engineering and rework costs"
+  },
+  {
+    "id": "MATERIAL-001",
+    "name": "Material Price Escalation",
+    "description": "Significant increases in steel, aluminum, and other material costs",
+    "category": "market",
+    "probability": 0.6,
+    "impact_distribution": {
+      "type": "triangular",
+      "low": 25000,
+      "mode": 100000,
+      "high": 250000
+    },
+    "affected_wbs": ["03-STRUCT", "05-COND", "06-STRUCT"],
+    "impact_type": "cost_increase",
+    "mitigation_strategy": "Fixed-price contracts, material hedging, early procurement",
+    "risk_owner": "Procurement Manager",
+    "likelihood_rationale": "High probability due to commodity market volatility",
+    "impact_rationale": "Material costs represent significant project portion"
+  }
+]

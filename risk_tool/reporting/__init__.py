@@ -1,7 +1,15 @@
 """Reporting and visualization modules."""
 
-from .reporting import SimulationResults, ResultsCalculator, ChartGenerator, ReportGenerator
+from .reporting import (
+    SimulationResults,
+    ResultsCalculator,
+    ChartGenerator,
+    ReportGenerator,
+)
 
 __all__ = [
-    'SimulationResults', 'ResultsCalculator', 'ChartGenerator', 'ReportGenerator',
+    "SimulationResults",
+    "ResultsCalculator",
+    "ChartGenerator",
+    "ReportGenerator",
 ]

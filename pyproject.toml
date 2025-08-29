@@ -52,6 +52,7 @@ dev = [
 
 [project.scripts]
 risk-tool = "risk_tool.cli:app"
+risk-tool-web = "risk_tool.ui.start_app:main"
 
 [project.urls]
 Homepage = "https://github.com/utility/risk-tool"
